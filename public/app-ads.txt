@@ -1,0 +1,9 @@
+# app-ads.txt for Cobiapps
+# This file is used by Google AdMob and other ad networks
+# to verify app ownership and monetization settings.
+
+# Google AdMob
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+
+# Replace pub-0000000000000000 with your actual AdMob publisher ID
+# when you have monetization enabled for your apps
