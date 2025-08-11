@@ -34,7 +34,7 @@ export default function Home() {
             image: "/images/minha_lista_de_compras.png",
             category: "Compras",
             rating: "★★★★★",
-            downloads: "10+",
+            downloads: "100+",
             playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.listadecompras",
             features: ["Listas inteligentes", "Cálculo automático", "Histórico de compras"]
         },
@@ -45,7 +45,7 @@ export default function Home() {
             image: "/images/tiratime.png",
             category: "Esportes",
             rating: "★★★★☆",
-            downloads: "1K+",
+            downloads: "5K+",
             playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.tiratime2",
             features: ["Níveis de habilidade", "Escolha de goleiro", "Times equilibrados"]
         },
@@ -228,11 +228,11 @@ export default function Home() {
                                 <div className="text-sm text-gray-600 dark:text-gray-400">Apps Lançados</div>
                             </div>
                             <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-purple-600 dark:text-purple-400">1K+</div>
+                                <div className="text-2xl md:text-3xl font-bold text-purple-600 dark:text-purple-400">5K+</div>
                                 <div className="text-sm text-gray-600 dark:text-gray-400">Downloads</div>
                             </div>
                             <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">4.3★</div>
+                                <div className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">4.8★</div>
                                 <div className="text-sm text-gray-600 dark:text-gray-400">Avaliação Média</div>
                             </div>
                             <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
