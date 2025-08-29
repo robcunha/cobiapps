@@ -69,8 +69,15 @@ export default function Home() {
                 <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center py-4 md:py-6">
                         <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-lg md:text-xl">C</span>
+                            <div className="w-8 h-8 md:w-10 md:h-10">
+                                <Image
+                                    src="/images/logo_512.png"
+                                    alt="Logo Cobiapps"
+                                    width={40}
+                                    height={40}
+                                    className="w-full h-full object-contain rounded-lg"
+                                    priority
+                                />
                             </div>
                             <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Cobiapps</h1>
                         </div>
@@ -140,11 +147,18 @@ export default function Home() {
             <section className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-12 md:py-20 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="mb-8">
-                        <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                            <span className="text-white font-bold text-3xl md:text-4xl">C</span>
+                        <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-6">
+                            <Image
+                                src="/images/logo_512.png"
+                                alt="Logo Cobiapps"
+                                width={96}
+                                height={96}
+                                className="w-full h-full object-contain rounded-[20px]"
+                                priority
+                            />
                         </div>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                            Cobiapps
+                            Cobi apps
                         </h1>
                         <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto px-4">
                             Desenvolvemos aplicativos simples e eficientes para facilitar a vida dos usuários Android
@@ -181,7 +195,7 @@ export default function Home() {
                     <div className="text-center mb-12 md:mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">Sobre Nós</h2>
                         <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed px-4">
-                            A Cobiapps desenvolve aplicativos simples e eficientes para facilitar a vida dos usuários Android.
+                            A Cobi apps desenvolve aplicativos simples e eficientes para facilitar a vida dos usuários Android.
                             Com milhares de downloads e avaliações positivas, nossa missão é criar soluções que ajudam no dia a dia —
                             de calculadoras a gerenciadores de tempo.
                         </p>
@@ -343,10 +357,16 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="flex items-center space-x-3 mb-4 md:mb-0">
-                            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold">C</span>
+                            <div className="w-8 h-8">
+                                <Image
+                                    src="/images/logo_512.png"
+                                    alt="Logo Cobiapps"
+                                    width={32}
+                                    height={32}
+                                    className="w-full h-full object-contain"
+                                />
                             </div>
-                            <span className="text-xl font-bold">Cobiapps</span>
+                            <span className="text-xl font-bold">Cobi apps</span>
                         </div>
                         <div className="flex items-center space-x-6 text-sm text-gray-400">
                             <a href="/app-ads.txt" className="hover:text-white transition-colors">app-ads.txt</a>
