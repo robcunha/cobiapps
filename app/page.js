@@ -28,13 +28,25 @@ export default function Home() {
 
     const apps = [
         {
+            name: "Controle de Validade",
+            description: "Evite desperdício controlando datas de validade de produtos",
+            icon: "📅",
+            image: "/images/controle_de_validade.png",
+            category: "Ferramentas",
+            rating: "★★★★★",
+            downloads: "1+",
+            isNew: true,
+            playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.controledevalidade",
+            features: ["Cadastro de produtos", "Filtros de status", "Dashboard intuitivo"]
+        },
+        {
             name: "Minha Lista de Compras",
             description: "Organize suas compras e controle gastos com facilidade",
             icon: "🛒",
             image: "/images/minha_lista_de_compras.png",
             category: "Compras",
             rating: "★★★★★",
-            downloads: "100+",
+            downloads: "500+",
             playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.listadecompras",
             features: ["Listas inteligentes", "Cálculo automático", "Histórico de compras"]
         },
@@ -238,7 +250,7 @@ export default function Home() {
                         {/* Stats */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-3xl mx-auto">
                             <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400">3</div>
+                                <div className="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400">4</div>
                                 <div className="text-sm text-gray-600 dark:text-gray-400">Apps Lançados</div>
                             </div>
                             <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
@@ -254,10 +266,21 @@ export default function Home() {
                                 <div className="text-sm text-gray-600 dark:text-gray-400">Gratuitos</div>
                             </div>
                         </div>
+                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 p-4 rounded-lg max-w-2xl mx-auto mb-8 border border-green-100 dark:border-green-800">
+                            <p className="text-green-800 dark:text-green-300 font-medium flex items-center justify-center">
+                                <span className="mr-2 text-xl">🎉</span>
+                                Novo app lançado: Controle de Validade! Experimente agora!
+                            </p>
+                        </div>
                     </div>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
                         {apps.map((app, index) => (
-                            <div key={index} className="bg-transparent dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group border p-6 border-gray-100 dark:border-gray-800">
+                            <div key={index} className="bg-transparent dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group border p-6 border-gray-100 dark:border-gray-800 relative">
+                                {app.isNew && (
+                                    <div className="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase shadow-lg animate-pulse">
+                                        Novo
+                                    </div>
+                                )}
                                 <div className="text-center mb-6">
                                     <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300 bg-transparent dark:bg-gray-800 rounded-3xl shadow-lg flex items-center justify-center">
                                         <Image
@@ -341,7 +364,7 @@ export default function Home() {
                             className="inline-flex items-center justify-center transition-all duration-300 hover:scale-105"
                         >
                             <Image
-                                src="/images/googlplay.png"
+                                src="/images/googleplay.png"
                                 alt="Ver todos os apps na Google Play Store"
                                 width={200}
                                 height={60}
