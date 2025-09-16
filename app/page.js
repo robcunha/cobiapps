@@ -34,7 +34,7 @@ export default function Home() {
             image: "/images/controle_de_validade.png",
             category: "Ferramentas",
             rating: "★★★★★",
-            downloads: "1+",
+            downloads: "50+",
             isNew: true,
             playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.controledevalidade",
             features: ["Cadastro de produtos", "Filtros de status", "Dashboard intuitivo"]
@@ -57,7 +57,7 @@ export default function Home() {
             image: "/images/tiratime.png",
             category: "Esportes",
             rating: "★★★★☆",
-            downloads: "5K+",
+            downloads: "10K+",
             playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.tiratime2",
             features: ["Níveis de habilidade", "Escolha de goleiro", "Times equilibrados"]
         },
@@ -254,7 +254,7 @@ export default function Home() {
                                 <div className="text-sm text-gray-600 dark:text-gray-400">Apps Lançados</div>
                             </div>
                             <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-purple-600 dark:text-purple-400">5K+</div>
+                                <div className="text-2xl md:text-3xl font-bold text-purple-600 dark:text-purple-400">10K+</div>
                                 <div className="text-sm text-gray-600 dark:text-gray-400">Downloads</div>
                             </div>
                             <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
