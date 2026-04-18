@@ -351,9 +351,9 @@ export default function Home() {
                             Tem sugestões, encontrou um bug ou quer saber mais sobre nossos apps? Nossa equipe responde rapidinho.
                         </motion.p>
                         <motion.div variants={fadeUp}>
-                            <a href="mailto:contato@cobiapps.com" className="group inline-flex items-center gap-3 px-7 py-4 rounded-2xl font-medium text-sm transition-all duration-200 hover:shadow-xl active:scale-95" style={{ background: 'var(--surface)', color: 'var(--foreground)', border: '1px solid var(--border)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                            <a href="mailto:roberto@cobiapps.com" className="group inline-flex items-center gap-3 px-7 py-4 rounded-2xl font-medium text-sm transition-all duration-200 hover:shadow-xl active:scale-95" style={{ background: 'var(--surface)', color: 'var(--foreground)', border: '1px solid var(--border)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
                                 <span style={{ color: 'var(--accent)' }}><Mail className="w-5 h-5" /></span>
-                                contato@cobiapps.com
+                                roberto@cobiapps.com
                                 <span className="group-hover:translate-x-0.5 transition-transform" style={{ color: 'var(--muted)' }}><ArrowRight className="w-4 h-4" /></span>
                             </a>
                         </motion.div>
