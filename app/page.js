@@ -1,403 +1,382 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import {
+    Zap, Target, Shield, Star, Download, ArrowRight, Check,
+    Mail, Sun, Moon, Menu, X,
+} from 'lucide-react';
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger = {
+    visible: { transition: { staggerChildren: 0.12 } },
+};
+
+function Section({ children, className = '', id }) {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: '-80px 0px' });
+    return (
+        <motion.section
+            id={id}
+            ref={ref}
+            className={className}
+            initial="hidden"
+            animate={isInView ? 'visible' : 'hidden'}
+            variants={stagger}
+        >
+            {children}
+        </motion.section>
+    );
+}
+
+const apps = [
+    {
+        name: "Controle de Validade",
+        tagline: "Evite desperdício, economize dinheiro",
+        description: "Nunca mais deixe produtos vencer na sua geladeira ou despensa. O Controle de Validade monitora suas datas de forma inteligente e te avisa antes que seja tarde.",
+        icon: "📅",
+        image: "/images/controle_de_validade.png",
+        category: "Ferramentas",
+        rating: "5.0",
+        downloads: "50+",
+        isNew: true,
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.controledevalidade",
+        features: ["Cadastro rápido de produtos", "Alertas automáticos de vencimento", "Dashboard com status visual", "Filtros por categoria"],
+        gradientFrom: "#10b981",
+        gradientTo: "#0d9488",
+        colorLight: "bg-emerald-50 dark:bg-emerald-950/30",
+        colorBadge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
+    },
+    {
+        name: "Minha Lista de Compras",
+        tagline: "Organize compras, controle gastos",
+        description: "Chega de esquecer itens no mercado ou gastar mais do que planejou. O app mais simples e eficiente para organizar suas compras e manter o orçamento sob controle.",
+        icon: "🛒",
+        image: "/images/minha_lista_de_compras.png",
+        category: "Compras",
+        rating: "5.0",
+        downloads: "500+",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.listadecompras",
+        features: ["Múltiplas listas simultâneas", "Cálculo automático do total", "Histórico de compras anteriores", "Compartilhamento de listas"],
+        gradientFrom: "#3b82f6",
+        gradientTo: "#4338ca",
+        colorLight: "bg-blue-50 dark:bg-blue-950/30",
+        colorBadge: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300",
+    },
+    {
+        name: "Tira Time",
+        tagline: "Times equilibrados em segundos",
+        description: "O app favorito das peladas! Sorteia times levando em conta o nível de cada jogador, garantindo partidas justas e equilibradas para todo mundo se divertir.",
+        icon: "⚽",
+        image: "/images/tiratime.png",
+        category: "Esportes",
+        rating: "4.5",
+        downloads: "10K+",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.tiratime2",
+        features: ["Sorteio por nível de habilidade", "Seleção de goleiros", "Times sempre equilibrados", "Sem cadastro necessário"],
+        gradientFrom: "#f97316",
+        gradientTo: "#d97706",
+        colorLight: "bg-orange-50 dark:bg-orange-950/30",
+        colorBadge: "bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-300",
+    },
+    {
+        name: "Vinoteca",
+        tagline: "Sua adega pessoal no bolso",
+        description: "Registre, avalie e redescubra os vinhos que você amou. Com identificação por IA e histórico de degustações, sua jornada enológica nunca mais vai se repetir.",
+        icon: "🍷",
+        image: "/images/vinoteca.png",
+        category: "Gastronomia",
+        rating: "5.0",
+        downloads: "100+",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.adega",
+        features: ["Identificação de rótulos com IA", "Avaliações e notas pessoais", "Histórico de degustações", "Sugestões personalizadas"],
+        gradientFrom: "#a855f7",
+        gradientTo: "#7c3aed",
+        colorLight: "bg-purple-50 dark:bg-purple-950/30",
+        colorBadge: "bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300",
+    },
+];
+
+const stats = [
+    { value: "4", label: "Apps lançados" },
+    { value: "10K+", label: "Downloads" },
+    { value: "4.9★", label: "Avaliação média" },
+    { value: "100%", label: "Gratuitos" },
+];
+
+const values = [
+    { icon: <Zap className="w-6 h-6" />, label: "Simples", description: "Interface intuitiva, sem curva de aprendizado. Você abre e já sabe usar.", color: "text-blue-500", bg: "bg-blue-50 dark:bg-blue-950/40" },
+    { icon: <Target className="w-6 h-6" />, label: "Eficiente", description: "Apps leves e rápidos, otimizados para qualquer dispositivo Android.", color: "text-violet-500", bg: "bg-violet-50 dark:bg-violet-950/40" },
+    { icon: <Shield className="w-6 h-6" />, label: "Confiável", description: "Milhares de usuários satisfeitos e avaliações 5 estrelas na Play Store.", color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950/40" },
+];
 
 export default function Home() {
     const [darkMode, setDarkMode] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
         const isDark = localStorage.getItem('darkMode') === 'true';
         setDarkMode(isDark);
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-        }
+        if (isDark) document.documentElement.classList.add('dark');
+        const handleScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const toggleDarkMode = () => {
-        const newDarkMode = !darkMode;
-        setDarkMode(newDarkMode);
-        localStorage.setItem('darkMode', newDarkMode.toString());
-        if (newDarkMode) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        const next = !darkMode;
+        setDarkMode(next);
+        localStorage.setItem('darkMode', String(next));
+        document.documentElement.classList.toggle('dark', next);
     };
 
-    const apps = [
-        {
-            name: "Controle de Validade",
-            description: "Evite desperdício controlando datas de validade de produtos",
-            icon: "📅",
-            image: "/images/controle_de_validade.png",
-            category: "Ferramentas",
-            rating: "★★★★★",
-            downloads: "50+",
-            isNew: true,
-            playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.controledevalidade",
-            features: ["Cadastro de produtos", "Filtros de status", "Dashboard intuitivo"]
-        },
-        {
-            name: "Minha Lista de Compras",
-            description: "Organize suas compras e controle gastos com facilidade",
-            icon: "🛒",
-            image: "/images/minha_lista_de_compras.png",
-            category: "Compras",
-            rating: "★★★★★",
-            downloads: "500+",
-            playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.listadecompras",
-            features: ["Listas inteligentes", "Cálculo automático", "Histórico de compras"]
-        },
-        {
-            name: "Tira Time",
-            description: "Sorteio de times para futebol com equilíbrio por habilidade",
-            icon: "⚽",
-            image: "/images/tiratime.png",
-            category: "Esportes",
-            rating: "★★★★☆",
-            downloads: "10K+",
-            playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.tiratime2",
-            features: ["Níveis de habilidade", "Escolha de goleiro", "Times equilibrados"]
-        },
-        {
-            name: "Vinoteca",
-            description: "Avalie e organize sua coleção de vinhos favoritos",
-            icon: "🍷",
-            image: "/images/vinoteca.png",
-            category: "Gastronomia",
-            rating: "★★★★★",
-            downloads: "100+",
-            playStoreUrl: "https://play.google.com/store/apps/details?id=com.cobiapps.adega",
-            features: ["IA para identificação", "Avaliações pessoais", "Histórico de degustações"]
-        }
+    const navLinks = [
+        { label: 'Sobre', href: '#sobre' },
+        { label: 'Aplicativos', href: '#aplicativos' },
+        { label: 'Contato', href: '#contato' },
     ];
 
     return (
-        <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
-            {/* Header */}
-            <header className="bg-white dark:bg-gray-900 shadow-sm transition-colors duration-300 sticky top-0 z-50">
-                <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-4 md:py-6">
-                        <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 md:w-10 md:h-10">
-                                <Image
-                                    src="/images/logo_512.png"
-                                    alt="Logo Cobiapps"
-                                    width={40}
-                                    height={40}
-                                    className="w-full h-full object-contain rounded-lg"
-                                    priority
-                                />
-                            </div>
-                            <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Cobiapps</h1>
-                        </div>
-                        <div className="hidden md:flex items-center space-x-6">
-                            <a href="#sobre" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Sobre</a>
-                            <a href="#aplicativos" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Aplicativos</a>
-                            <a href="#contato" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contato</a>
-                            <button
-                                onClick={toggleDarkMode}
-                                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                                aria-label="Toggle dark mode"
-                            >
-                                {darkMode ? '☀️' : '🌙'}
-                            </button>
-                        </div>
-                        <div className="md:hidden flex items-center space-x-2">
-                            <button
-                                onClick={toggleDarkMode}
-                                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                                aria-label="Toggle dark mode"
-                            >
-                                {darkMode ? '☀️' : '🌙'}
-                            </button>
-                            <button
-                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                                aria-label="Toggle mobile menu"
-                            >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    {/* Mobile Menu */}
-                    {mobileMenuOpen && (
-                        <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
-                            <div className="flex flex-col space-y-4">
-                                <a
-                                    href="#sobre"
-                                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    Sobre
-                                </a>
-                                <a
-                                    href="#aplicativos"
-                                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    Aplicativos
-                                </a>
-                                <a
-                                    href="#contato"
-                                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    Contato
-                                </a>
-                            </div>
-                        </div>
-                    )}
-                </nav>
-            </header>
+        <div className={darkMode ? 'dark' : ''}>
+            <div style={{ background: 'var(--background)', color: 'var(--foreground)' }} className="min-h-screen transition-colors duration-300">
 
-            {/* Hero Section */}
-            <section className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-12 md:py-20 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div className="mb-8">
-                        <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-6">
-                            <Image
-                                src="/images/logo_512.png"
-                                alt="Logo Cobiapps"
-                                width={96}
-                                height={96}
-                                className="w-full h-full object-contain rounded-[20px]"
-                                priority
-                            />
-                        </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                            Cobi apps
-                        </h1>
-                        <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto px-4">
-                            Desenvolvemos aplicativos simples e eficientes para facilitar a vida dos usuários Android
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-                            <a
-                                href="https://play.google.com/store/apps/developer?id=Cobi+Apps"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center transition-all duration-300 hover:scale-105"
-                            >
-                                <Image
-                                    src="/images/googleplay.png"
-                                    alt="Ver na Google Play Store"
-                                    width={200}
-                                    height={60}
-                                    className="h-12 md:h-14 w-auto"
-                                />
-                            </a>
-                            <a
-                                href="#aplicativos"
-                                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-blue-600 dark:hover:border-blue-400 transition-all duration-300"
-                            >
-                                Nossos Apps
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* About Section */}
-            <section id="sobre" className="py-12 md:py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-12 md:mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">Sobre Nós</h2>
-                        <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed px-4">
-                            A Cobi apps desenvolve aplicativos simples e eficientes para facilitar a vida dos usuários Android.
-                            Com milhares de downloads e avaliações positivas, nossa missão é criar soluções que ajudam no dia a dia —
-                            de calculadoras a gerenciadores de tempo.
-                        </p>
-                    </div>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-                        <div className="text-center p-6">
-                            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-3xl">⚡</span>
-                            </div>
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Simples</h3>
-                            <p className="text-gray-600 dark:text-gray-300">Interface intuitiva e fácil de usar</p>
-                        </div>
-                        <div className="text-center p-6">
-                            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-3xl">🚀</span>
-                            </div>
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Eficiente</h3>
-                            <p className="text-gray-600 dark:text-gray-300">Apps leves e otimizados</p>
-                        </div>
-                        <div className="text-center p-6 sm:col-span-2 md:col-span-1">
-                            <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-3xl">⭐</span>
-                            </div>
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Confiável</h3>
-                            <p className="text-gray-600 dark:text-gray-300">Milhares de usuários satisfeitos</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Apps Section */}
-            <section id="aplicativos" className="py-12 md:py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-12 md:mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">Nossos Aplicativos</h2>
-                        <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4 mb-8">
-                            Descubra nossa coleção de apps úteis, todos disponíveis gratuitamente na Google Play Store
-                        </p>
-
-                        {/* Stats */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-3xl mx-auto">
-                            <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400">4</div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">Apps Lançados</div>
-                            </div>
-                            <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-purple-600 dark:text-purple-400">10K+</div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">Downloads</div>
-                            </div>
-                            <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">4.8★</div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">Avaliação Média</div>
-                            </div>
-                            <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
-                                <div className="text-2xl md:text-3xl font-bold text-orange-600 dark:text-orange-400">100%</div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">Gratuitos</div>
-                            </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 p-4 rounded-lg max-w-2xl mx-auto mb-8 border border-green-100 dark:border-green-800">
-                            <p className="text-green-800 dark:text-green-300 font-medium flex items-center justify-center">
-                                <span className="mr-2 text-xl">🎉</span>
-                                Novo app lançado: Controle de Validade! Experimente agora!
-                            </p>
-                        </div>
-                    </div>
-                    <div className="grid sm:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-                        {apps.map((app, index) => (
-                            <div key={index} className="bg-transparent dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group border p-6 border-gray-100 dark:border-gray-800 relative">
-                                {app.isNew && (
-                                    <div className="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase shadow-lg animate-pulse">
-                                        Novo
-                                    </div>
-                                )}
-                                <div className="text-center mb-6">
-                                    <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300 bg-transparent dark:bg-gray-800 rounded-3xl shadow-lg flex items-center justify-center">
-                                        <Image
-                                            src={app.image}
-                                            alt={`Ícone do ${app.name}`}
-                                            width={112}
-                                            height={112}
-                                            className="w-full h-full object-contain rounded-xl"
-                                            priority={index === 0}
-                                            onError={(e) => {
-                                                e.currentTarget.style.display = 'none';
-                                                e.currentTarget.nextSibling.style.display = 'block';
-                                            }}
-                                        />
-                                        <span className="text-4xl hidden">{app.icon}</span>
-                                    </div>
-                                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">{app.name}</h3>
-                                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4">{app.description}</p>
-
-                                    {/* App Stats */}
-                                    <div className="flex justify-center items-center space-x-4 mb-4 text-sm">
-                                        <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full font-medium">
-                                            {app.category}
-                                        </span>
-                                        <span className="text-yellow-500">{app.rating}</span>
-                                        <span className="text-gray-500 dark:text-gray-400">{app.downloads}</span>
-                                    </div>
-
-                                    {/* Features */}
-                                    <div className="mb-6">
-                                        <ul className="text-xs md:text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                                            {app.features.map((feature, idx) => (
-                                                <li key={idx} className="flex items-center justify-center">
-                                                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-                                                    {feature}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                <header
+                    className="sticky top-0 z-50 transition-all duration-300"
+                    style={{
+                        backdropFilter: scrolled ? 'blur(16px)' : 'none',
+                        WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+                        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+                        backgroundColor: scrolled ? (darkMode ? 'rgba(9,9,11,0.85)' : 'rgba(250,250,250,0.85)') : 'transparent',
+                    }}
+                >
+                    <nav className="max-w-6xl mx-auto px-5 lg:px-8">
+                        <div className="flex items-center justify-between h-16">
+                            <a href="#" className="flex items-center gap-2.5 group">
+                                <div className="w-8 h-8 rounded-xl overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
+                                    <Image src="/images/logo_512.png" alt="Cobiapps" width={32} height={32} className="w-full h-full object-cover" priority />
                                 </div>
-
-                                <a
-                                    href={app.playStoreUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block w-full transition-all duration-300 group-hover:scale-105"
-                                >
-                                    <Image
-                                        src="/images/googleplay.png"
-                                        alt="Baixar na Google Play Store"
-                                        width={200}
-                                        height={60}
-                                        className="w-full max-w-[200px] h-auto mx-auto hover:scale-105 transition-transform duration-300"
-                                    />
+                                <span className="font-semibold text-base" style={{ color: 'var(--foreground)' }}>Cobiapps</span>
+                            </a>
+                            <div className="hidden md:flex items-center gap-1">
+                                {navLinks.map(link => (
+                                    <a key={link.href} href={link.href} className="px-4 py-2 text-sm rounded-lg transition-opacity hover:opacity-70" style={{ color: 'var(--muted)' }}>
+                                        {link.label}
+                                    </a>
+                                ))}
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <button onClick={toggleDarkMode} className="flex items-center justify-center w-9 h-9 rounded-lg hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)', background: 'var(--surface-alt)' }} aria-label="Alternar modo escuro">
+                                    {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                                </button>
+                                <a href="https://play.google.com/store/apps/developer?id=Cobi+Apps" target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white transition-opacity hover:opacity-90" style={{ background: 'var(--accent)' }}>
+                                    Google Play
                                 </a>
+                                <button className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg" style={{ color: 'var(--muted)', background: 'var(--surface-alt)' }} onClick={() => setMobileMenuOpen(v => !v)} aria-label="Menu">
+                                    {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                                </button>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+                        </div>
+                        <AnimatePresence>
+                            {mobileMenuOpen && (
+                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.25 }} className="md:hidden overflow-hidden">
+                                    <div className="pb-4 pt-3 flex flex-col gap-1" style={{ borderTop: '1px solid var(--border)' }}>
+                                        {navLinks.map(link => (
+                                            <a key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="px-3 py-2.5 text-sm rounded-lg" style={{ color: 'var(--muted)' }}>{link.label}</a>
+                                        ))}
+                                        <a href="https://play.google.com/store/apps/developer?id=Cobi+Apps" target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-lg text-white" style={{ background: 'var(--accent)' }} onClick={() => setMobileMenuOpen(false)}>
+                                            Google Play
+                                        </a>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </nav>
+                </header>
 
-            {/* Contact Section */}
-            <section id="contato" className="py-12 md:py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">Entre em Contato</h2>
-                    <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
-                        Tem uma sugestão, dúvida ou feedback? Adoraríamos ouvir de você!
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center px-4">
-                        <a
-                            href="mailto:contato@cobiapps.com"
-                            className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-                        >
-                            <span className="mr-3 text-xl md:text-2xl">📧</span>
-                            contato@cobiapps.com
-                        </a>
-                        <a
-                            href="https://play.google.com/store/apps/developer?id=Cobi+Apps"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center transition-all duration-300 hover:scale-105"
-                        >
-                            <Image
-                                src="/images/googleplay.png"
-                                alt="Ver todos os apps na Google Play Store"
-                                width={200}
-                                height={60}
-                                className="h-12 md:h-14 w-auto"
-                            />
-                        </a>
+                <section className="relative overflow-hidden py-24 md:py-36 lg:py-44">
+                    <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)', opacity: 0.7 }} />
                     </div>
-                </div>
-            </section>
+                    <div className="relative max-w-4xl mx-auto px-5 lg:px-8 text-center">
+                        <motion.div initial="hidden" animate="visible" variants={stagger}>
+                            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 mb-8">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium" style={{ background: 'var(--accent-light)', color: 'var(--accent)' }}>
+                                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                                    Apps para Android
+                                </span>
+                            </motion.div>
+                            <motion.div variants={fadeUp} className="flex justify-center mb-8">
+                                <div className="w-20 h-20 rounded-[22px] overflow-hidden" style={{ boxShadow: '0 20px 60px var(--accent-glow)' }}>
+                                    <Image src="/images/logo_512.png" alt="Cobiapps" width={80} height={80} className="w-full h-full object-cover" priority />
+                                </div>
+                            </motion.div>
+                            <motion.h1 variants={fadeUp} className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6" style={{ color: 'var(--foreground)' }}>
+                                Apps que{' '}
+                                <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)' }}>
+                                    simplificam
+                                </span>{' '}
+                                seu dia
+                            </motion.h1>
+                            <motion.p variants={fadeUp} className="text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
+                                Desenvolvemos aplicativos Android simples, eficientes e gratuitos — criados para resolver problemas reais do cotidiano.
+                            </motion.p>
+                            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                                <a href="https://play.google.com/store/apps/developer?id=Cobi+Apps" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 px-6 py-3.5 rounded-xl font-medium text-sm text-white transition-all duration-200 hover:opacity-90 active:scale-95" style={{ background: 'linear-gradient(135deg, #2563eb 0%, #4338ca 100%)', boxShadow: '0 8px 24px var(--accent-glow)' }}>
+                                    Ver na Google Play
+                                    <span className="group-hover:translate-x-0.5 transition-transform"><ArrowRight className="w-4 h-4" /></span>
+                                </a>
+                                <a href="#aplicativos" className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-medium text-sm transition-all duration-200 hover:opacity-80" style={{ color: 'var(--foreground)', background: 'var(--surface-alt)', border: '1px solid var(--border)' }}>
+                                    Nossos aplicativos
+                                </a>
+                            </motion.div>
+                            <motion.div variants={fadeUp} className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: 'var(--border)' }}>
+                                {stats.map(s => (
+                                    <div key={s.label} className="flex flex-col items-center py-6 px-4" style={{ background: 'var(--surface)' }}>
+                                        <span className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{s.value}</span>
+                                        <span className="text-xs mt-1" style={{ color: 'var(--muted)' }}>{s.label}</span>
+                                    </div>
+                                ))}
+                            </motion.div>
+                        </motion.div>
+                    </div>
+                </section>
 
-            {/* Footer */}
-            <footer className="bg-gray-900 dark:bg-black text-white py-12 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center">
-                        <div className="flex items-center space-x-3 mb-4 md:mb-0">
-                            <div className="w-8 h-8">
-                                <Image
-                                    src="/images/logo_512.png"
-                                    alt="Logo Cobiapps"
-                                    width={32}
-                                    height={32}
-                                    className="w-full h-full object-contain"
-                                />
+                <Section id="sobre" className="py-24 md:py-32">
+                    <div className="max-w-6xl mx-auto px-5 lg:px-8">
+                        <motion.p variants={fadeUp} className="text-xs font-semibold uppercase tracking-widest mb-4 text-center" style={{ color: 'var(--accent)' }}>Nossa missão</motion.p>
+                        <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-center mb-5" style={{ color: 'var(--foreground)' }}>Tecnologia que cabe na sua rotina</motion.h2>
+                        <motion.p variants={fadeUp} className="text-base md:text-lg text-center max-w-2xl mx-auto mb-16 leading-relaxed" style={{ color: 'var(--muted)' }}>
+                            A Cobiapps cria aplicativos Android que resolvem problemas cotidianos sem complicação. Com milhares de downloads e avaliações 5 estrelas, nossa filosofia é simples: menos é mais.
+                        </motion.p>
+                        <div className="grid md:grid-cols-3 gap-6">
+                            {values.map(v => (
+                                <motion.div key={v.label} variants={fadeUp} className="group p-7 rounded-2xl border transition-all duration-300 hover:shadow-lg cursor-default" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+                                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 ${v.bg} ${v.color} group-hover:scale-110 transition-transform duration-300`}>
+                                        {v.icon}
+                                    </div>
+                                    <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--foreground)' }}>{v.label}</h3>
+                                    <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{v.description}</p>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </Section>
+
+                <div className="max-w-6xl mx-auto px-5 lg:px-8 mb-4">
+                    <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="relative overflow-hidden rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-center gap-4">
+                        <div className="absolute inset-0 rounded-2xl" style={{ background: darkMode ? 'linear-gradient(135deg, rgba(6,78,59,0.4) 0%, rgba(4,120,87,0.3) 100%)' : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)' }} />
+                        <span className="relative text-2xl">🎉</span>
+                        <div className="relative flex-1 text-center sm:text-left">
+                            <span className="font-semibold text-sm" style={{ color: darkMode ? '#6ee7b7' : '#064e3b' }}>Novo app lançado! </span>
+                            <span className="text-sm" style={{ color: darkMode ? '#a7f3d0' : '#047857' }}>Controle de Validade está disponível gratuitamente na Google Play.</span>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.cobiapps.controledevalidade" target="_blank" rel="noopener noreferrer" className="relative flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white transition-opacity hover:opacity-90" style={{ background: '#059669' }}>
+                            Baixar agora <ArrowRight className="w-4 h-4" />
+                        </a>
+                    </motion.div>
+                </div>
+
+                <Section id="aplicativos" className="py-12 md:py-20">
+                    <div className="max-w-6xl mx-auto px-5 lg:px-8">
+                        <motion.p variants={fadeUp} className="text-xs font-semibold uppercase tracking-widest mb-4 text-center" style={{ color: 'var(--accent)' }}>Portfólio</motion.p>
+                        <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-center mb-5" style={{ color: 'var(--foreground)' }}>Nossos aplicativos</motion.h2>
+                        <motion.p variants={fadeUp} className="text-base md:text-lg text-center max-w-xl mx-auto mb-16" style={{ color: 'var(--muted)' }}>
+                            Todos gratuitos, sem anúncios invasivos, disponíveis na Google Play Store.
+                        </motion.p>
+                        <div className="flex flex-col gap-8">
+                            {apps.map((app, i) => (
+                                <motion.div key={app.name} variants={fadeUp} className="group relative overflow-hidden rounded-2xl border transition-all duration-300 hover:shadow-xl" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+                                    {app.isNew && (
+                                        <div className="absolute top-5 right-5 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold text-white" style={{ background: '#059669' }}>
+                                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                            Novo
+                                        </div>
+                                    )}
+                                    <div className={`flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
+                                        <div className={`relative lg:w-2/5 min-h-[220px] lg:min-h-[340px] flex items-center justify-center overflow-hidden ${app.colorLight}`}>
+                                            <div className="absolute inset-0 opacity-20" style={{ background: `linear-gradient(135deg, ${app.gradientFrom} 0%, ${app.gradientTo} 100%)` }} />
+                                            <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.4, ease: 'easeOut' }} className="relative z-10 w-32 h-32 lg:w-44 lg:h-44 rounded-3xl shadow-2xl overflow-hidden">
+                                                <Image src={app.image} alt={app.name} width={176} height={176} className="w-full h-full object-contain" priority={i === 0} />
+                                            </motion.div>
+                                        </div>
+                                        <div className="flex-1 p-7 lg:p-10 flex flex-col justify-center">
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${app.colorBadge}`}>{app.category}</span>
+                                                <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--muted)' }}>
+                                                    <span className="text-amber-400"><Star className="w-4 h-4" fill="currentColor" /></span>{app.rating}
+                                                </span>
+                                                <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--muted)' }}>
+                                                    <Download className="w-4 h-4" />{app.downloads}
+                                                </span>
+                                            </div>
+                                            <h3 className="text-2xl md:text-3xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>{app.name}</h3>
+                                            <p className="text-sm font-medium mb-3" style={{ color: app.gradientFrom }}>{app.tagline}</p>
+                                            <p className="text-sm md:text-base leading-relaxed mb-6" style={{ color: 'var(--muted)' }}>{app.description}</p>
+                                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
+                                                {app.features.map(f => (
+                                                    <li key={f} className="flex items-center gap-2 text-sm" style={{ color: 'var(--foreground)' }}>
+                                                        <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white" style={{ background: app.gradientFrom }}><Check className="w-3.5 h-3.5" strokeWidth={2.5} /></span>
+                                                        {f}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <div>
+                                                <a href={app.playStoreUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95" style={{ background: `linear-gradient(135deg, ${app.gradientFrom} 0%, ${app.gradientTo} 100%)` }}>
+                                                    Baixar na Play Store
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </Section>
+
+                <Section id="contato" className="py-24 md:py-32">
+                    <div className="max-w-2xl mx-auto px-5 lg:px-8 text-center">
+                        <motion.div variants={fadeUp} className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: 'var(--accent-light)', color: 'var(--accent)' }}>
+                            <Mail className="w-5 h-5" />
+                        </motion.div>
+                        <motion.p variants={fadeUp} className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--accent)' }}>Contato</motion.p>
+                        <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold mb-5" style={{ color: 'var(--foreground)' }}>Fale com a gente</motion.h2>
+                        <motion.p variants={fadeUp} className="text-base md:text-lg mb-10 leading-relaxed" style={{ color: 'var(--muted)' }}>
+                            Tem sugestões, encontrou um bug ou quer saber mais sobre nossos apps? Nossa equipe responde rapidinho.
+                        </motion.p>
+                        <motion.div variants={fadeUp}>
+                            <a href="mailto:contato@cobiapps.com" className="group inline-flex items-center gap-3 px-7 py-4 rounded-2xl font-medium text-sm transition-all duration-200 hover:shadow-xl active:scale-95" style={{ background: 'var(--surface)', color: 'var(--foreground)', border: '1px solid var(--border)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                                <span style={{ color: 'var(--accent)' }}><Mail className="w-5 h-5" /></span>
+                                contato@cobiapps.com
+                                <span className="group-hover:translate-x-0.5 transition-transform" style={{ color: 'var(--muted)' }}><ArrowRight className="w-4 h-4" /></span>
+                            </a>
+                        </motion.div>
+                    </div>
+                </Section>
+
+                <footer className="py-8" style={{ borderTop: '1px solid var(--border)' }}>
+                    <div className="max-w-6xl mx-auto px-5 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-lg overflow-hidden">
+                                <Image src="/images/logo_512.png" alt="Cobiapps" width={24} height={24} className="w-full h-full object-cover" />
                             </div>
-                            <span className="text-xl font-bold">Cobi apps</span>
+                            <span className="text-sm" style={{ color: 'var(--muted)' }}>© {new Date().getFullYear()} Cobiapps. Todos os direitos reservados.</span>
                         </div>
-                        <div className="flex items-center space-x-6 text-sm text-gray-400">
-                            <a href="/app-ads.txt" className="hover:text-white transition-colors">app-ads.txt</a>
-                            <span>© 2025 Cobiapps. Todos os direitos reservados.</span>
+                        <div className="flex items-center gap-5">
+                            <a href="/app-ads.txt" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>app-ads.txt</a>
+                            <a href="mailto:contato@cobiapps.com" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Contato</a>
+                            <a href="https://play.google.com/store/apps/developer?id=Cobi+Apps" target="_blank" rel="noopener noreferrer" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Google Play</a>
                         </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+
+            </div>
         </div>
     );
 }
