@@ -370,6 +370,7 @@ export default function Home() {
                         </div>
                         <div className="flex items-center gap-5">
                             <a href="/app-ads.txt" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>app-ads.txt</a>
+                            <a href="/privacidade" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Privacidade</a>
                             <a href="mailto:contato@cobiapps.com" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Contato</a>
                             <a href="https://play.google.com/store/apps/developer?id=Cobi+Apps" target="_blank" rel="noopener noreferrer" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Google Play</a>
                         </div>
