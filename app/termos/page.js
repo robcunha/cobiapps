@@ -52,7 +52,7 @@ const sections = [
     },
     {
         title: "12. Lei Aplicável e Foro",
-        content: `Estes Termos são regidos pelas leis da República Federativa do Brasil. Fica eleito o foro da comarca de Belo Horizonte, Estado de Minas Gerais, para dirimir quaisquer controvérsias decorrentes deste instrumento, com renúncia expressa a qualquer outro, por mais privilegiado que seja.`,
+        content: `Estes Termos são regidos pelas leis da República Federativa do Brasil. Fica eleito o foro da comarca do Rio de Janeiro, Estado do Rio de Janeiro, para dirimir quaisquer controvérsias decorrentes deste instrumento, com renúncia expressa a qualquer outro, por mais privilegiado que seja.`,
     },
     {
         title: "13. Contato",
