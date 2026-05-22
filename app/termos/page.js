@@ -3,62 +3,64 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Sun, Moon, ArrowLeft, Shield } from 'lucide-react';
+import { Sun, Moon, ArrowLeft, ScrollText } from 'lucide-react';
 
 const sections = [
     {
-        title: "1. Quem somos",
-        content: `A Cobiapps é uma desenvolvedora independente de aplicativos móveis, responsável pelos apps listados nesta política. Para entrar em contato, envie um e-mail para roberto@cobiapps.com.`,
+        title: "1. Aceitação dos Termos",
+        content: `Ao baixar, instalar ou utilizar qualquer aplicativo da Cobiapps, você concorda com estes Termos de Uso. Se não concordar com alguma condição, não utilize nossos aplicativos.\n\nEstes Termos se aplicam a todos os aplicativos publicados pela Cobiapps, incluindo Controle de Validade, Minha Lista de Compras, Tira Time e Vinoteca.`,
     },
     {
-        title: "2. Aplicativos cobertos por esta política",
-        content: null,
-        list: [
-            "Controle de Validade (Android e iOS)",
-            "Minha Lista de Compras (Android e iOS)",
-            "Tira Time (Android e iOS)",
-            "Vinoteca (Android e iOS)",
-        ],
+        title: "2. Descrição dos Serviços",
+        content: `A Cobiapps desenvolve e distribui aplicativos móveis gratuitos para Android e iOS. Nossos apps são ferramentas de produtividade e utilidade pessoal, disponibilizados sem cobrança e sem anúncios invasivos.\n\nNos reservamos o direito de modificar, suspender ou encerrar qualquer aplicativo a qualquer momento, sem aviso prévio.`,
     },
     {
-        title: "3. Dados coletados",
-        content: `Nossos aplicativos foram desenvolvidos com foco em privacidade. Todos os dados inseridos por você — como listas, produtos, avaliações e informações de jogadores — são armazenados exclusivamente no próprio dispositivo, utilizando o armazenamento local do sistema operacional.\n\nNão coletamos, transmitimos, armazenamos em servidores externos nem compartilhamos com terceiros nenhum dado pessoal inserido nos aplicativos.`,
+        title: "3. Uso Permitido",
+        content: `Você pode utilizar nossos aplicativos para fins pessoais, não comerciais. É expressamente proibido:\n\n• Copiar, modificar, distribuir ou fazer engenharia reversa dos aplicativos;\n• Utilizar os apps para fins ilegais, fraudulentos ou que causem dano a terceiros;\n• Tentar acessar partes não autorizadas do sistema ou infraestrutura;\n• Remover ou alterar avisos de direitos autorais ou marcas registradas.`,
     },
     {
-        title: "4. Dados de uso e diagnóstico",
-        content: `Não utilizamos ferramentas de analytics, rastreamento ou monitoramento de comportamento do usuário. Não integramos Google Analytics, Firebase Analytics, Mixpanel, Sentry ou qualquer serviço similar nos nossos aplicativos.`,
+        title: "4. Propriedade Intelectual",
+        content: `Todos os direitos sobre os aplicativos — incluindo código-fonte, design, ícones, logotipos, textos e funcionalidades — são de propriedade exclusiva da Cobiapps e estão protegidos pelas leis de propriedade intelectual.\n\nO uso dos aplicativos não transfere ao usuário nenhum direito de propriedade sobre eles.`,
     },
     {
-        title: "5. Publicidade",
-        content: `Nossos aplicativos não exibem anúncios publicitários e não integram nenhuma rede de publicidade (como Google AdMob). Não coletamos dados para fins de publicidade direcionada.`,
+        title: "5. Isenção de Garantias",
+        content: `Os aplicativos são fornecidos "no estado em que se encontram", sem garantias expressas ou implícitas de qualquer tipo, incluindo, sem limitação, garantias de adequação a uma finalidade específica, disponibilidade contínua ou ausência de erros.\n\nNão garantimos que os aplicativos funcionarão sem interrupções, atrasos ou falhas técnicas.`,
     },
     {
-        title: "6. Permissões do dispositivo",
-        content: `Alguns aplicativos podem solicitar permissões do dispositivo (como câmera ou notificações) estritamente para fornecer funcionalidades específicas. Essas permissões são utilizadas apenas para o fim declarado e nunca para coleta de dados pessoais.`,
+        title: "6. Limitação de Responsabilidade",
+        content: `Na máxima extensão permitida pela legislação aplicável, a Cobiapps não será responsável por quaisquer danos diretos, indiretos, incidentais, especiais ou consequenciais resultantes do uso ou da impossibilidade de uso dos aplicativos, incluindo perda de dados, lucros cessantes ou interrupção de negócios.\n\nO usuário é inteiramente responsável por manter cópias de segurança dos dados inseridos nos aplicativos.`,
     },
     {
-        title: "7. Lojas de aplicativos",
-        content: `Os apps são distribuídos pela Google Play Store (Android) e pela Apple App Store (iOS). Essas plataformas possuem suas próprias políticas de privacidade e podem coletar dados de uso e diagnóstico conforme seus termos. Recomendamos a leitura das políticas de privacidade da Google e da Apple para mais informações.`,
+        title: "7. Disponibilidade e Atualizações",
+        content: `Podemos lançar atualizações, correções ou novas versões dos aplicativos a qualquer momento. Algumas atualizações podem ser obrigatórias para o correto funcionamento do app.\n\nNão garantimos que determinada versão de um aplicativo continuará disponível indefinidamente nas lojas de distribuição.`,
     },
     {
-        title: "8. Crianças",
-        content: `Nossos aplicativos não são direcionados a crianças menores de 13 anos e não coletamos intencionalmente dados de menores. Se você acredita que seu filho forneceu dados por meio de um dos nossos apps, entre em contato conosco para que possamos tomar as medidas cabíveis.`,
+        title: "8. Lojas de Aplicativos",
+        content: `Nossos aplicativos são distribuídos pela Google Play Store (Android) e pela Apple App Store (iOS). Ao baixá-los, você também concorda com os termos de serviço dessas plataformas.\n\nA Cobiapps não se responsabiliza por condições, políticas ou cobranças impostas pelas lojas de distribuição.`,
     },
     {
-        title: "9. Seus direitos",
-        content: `Como não coletamos dados pessoais, não há dados sobre você armazenados em nossos servidores para acessar, corrigir ou excluir. Todos os dados do aplicativo residem no seu dispositivo e podem ser removidos desinstalando o app ou limpando o armazenamento do app nas configurações do sistema.`,
+        title: "9. Menores de Idade",
+        content: `Nossos aplicativos são destinados a usuários com 13 anos de idade ou mais. Pessoas com menos de 18 anos devem utilizar os aplicativos somente com supervisão de um responsável legal.\n\nNão coletamos intencionalmente dados de crianças menores de 13 anos. Caso você identifique uso indevido por menores, entre em contato conosco.`,
     },
     {
-        title: "10. Alterações nesta política",
-        content: `Esta política pode ser atualizada periodicamente. Em caso de alterações relevantes, publicaremos a versão atualizada nesta página. Recomendamos revisitá-la ocasionalmente.`,
+        title: "10. Privacidade",
+        content: `O tratamento de dados pessoais é regido pela nossa Política de Privacidade, disponível em cobiapps.com/privacidade. Ao utilizar nossos aplicativos, você também concorda com os termos dessa política.`,
     },
     {
-        title: "11. Contato",
-        content: `Dúvidas sobre esta Política de Privacidade? Fale conosco:\n\nE-mail: roberto@cobiapps.com`,
+        title: "11. Alterações nestes Termos",
+        content: `Podemos atualizar estes Termos de Uso periodicamente. Alterações relevantes serão comunicadas por meio de atualização desta página, com indicação da nova data de vigência. O uso continuado dos aplicativos após a publicação das alterações constitui aceitação dos novos termos.`,
+    },
+    {
+        title: "12. Lei Aplicável e Foro",
+        content: `Estes Termos são regidos pelas leis da República Federativa do Brasil. Fica eleito o foro da comarca de Belo Horizonte, Estado de Minas Gerais, para dirimir quaisquer controvérsias decorrentes deste instrumento, com renúncia expressa a qualquer outro, por mais privilegiado que seja.`,
+    },
+    {
+        title: "13. Contato",
+        content: `Dúvidas sobre estes Termos de Uso? Fale conosco:\n\nE-mail: roberto@cobiapps.com`,
     },
 ];
 
-export default function Privacidade() {
+export default function Termos() {
     const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
@@ -116,20 +118,20 @@ export default function Privacidade() {
                     {/* Page title */}
                     <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-light)', color: 'var(--accent)' }}>
-                            <Shield className="w-5 h-5" />
+                            <ScrollText className="w-5 h-5" />
                         </div>
                         <div>
                             <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: 'var(--accent)' }}>Legal</p>
-                            <h1 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--foreground)' }}>Política de Privacidade</h1>
+                            <h1 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--foreground)' }}>Termos de Uso</h1>
                         </div>
                     </div>
 
                     <p className="text-sm mb-12" style={{ color: 'var(--muted)' }}>
-                        Última atualização: 16 de maio de 2026
+                        Última atualização: 21 de maio de 2026
                     </p>
 
                     <p className="text-base md:text-lg leading-relaxed mb-12" style={{ color: 'var(--muted)' }}>
-                        A sua privacidade é fundamental para nós. Esta política explica de forma clara e objetiva como os aplicativos da Cobiapps tratam (ou não tratam) os seus dados.
+                        Estes Termos de Uso estabelecem as condições para utilização dos aplicativos desenvolvidos pela Cobiapps. Leia com atenção antes de usar nossos produtos.
                     </p>
 
                     {/* Sections */}
@@ -172,7 +174,7 @@ export default function Privacidade() {
                         </div>
                         <div className="flex items-center gap-5">
                             <Link href="/" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Home</Link>
-                            <Link href="/termos" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Termos de Uso</Link>
+                            <Link href="/privacidade" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Privacidade</Link>
                             <a href="mailto:roberto@cobiapps.com" className="text-xs hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>Contato</a>
                         </div>
                     </div>
