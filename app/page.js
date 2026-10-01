@@ -138,6 +138,7 @@ export default function Home() {
 
     const navLinks = [
         { label: 'Sobre', href: '#sobre' },
+        { label: 'Meus Filhos', href: '/meus-filhos' },
         { label: 'Aplicativos', href: '#aplicativos' },
         { label: 'Contato', href: '#contato' },
     ];
@@ -281,6 +282,39 @@ export default function Home() {
                         </a>
                     </motion.div>
                 </div>
+
+                <Section id="meus-filhos" className="py-12 md:py-20">
+                    <div className="max-w-6xl mx-auto px-5 lg:px-8">
+                        <motion.div variants={fadeUp} className="relative overflow-hidden rounded-3xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+                            <div className="absolute inset-0 opacity-[0.08]" style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #a855f7 45%, #ec4899 75%, #f97316 100%)' }} />
+                            <div className="relative flex flex-col lg:flex-row items-center gap-10 p-8 md:p-12 lg:p-14">
+                                <motion.div whileHover={{ scale: 1.05, rotate: -2 }} transition={{ duration: 0.4, ease: 'easeOut' }} className="flex-shrink-0 w-36 h-36 lg:w-48 lg:h-48 rounded-[36px] overflow-hidden bg-white shadow-2xl">
+                                    <Image src="/images/meus_filhos.png" alt="Meus Filhos" width={192} height={192} className="w-full h-full object-cover" />
+                                </motion.div>
+                                <div className="flex-1 text-center lg:text-left">
+                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mb-4 bg-pink-100 text-pink-700 dark:bg-pink-900/50 dark:text-pink-300">Família</span>
+                                    <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>Meus Filhos</h2>
+                                    <p className="text-sm font-medium mb-4" style={{ color: '#a855f7' }}>A história deles, guardada com amor.</p>
+                                    <p className="text-sm md:text-base leading-relaxed mb-6 max-w-2xl mx-auto lg:mx-0" style={{ color: 'var(--muted)' }}>
+                                        Diário digital e agenda dos seus filhos: saúde, escola, documentos e memórias, tudo organizado num só lugar. Para iPhone e Android.
+                                    </p>
+                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8 max-w-xl mx-auto lg:mx-0 text-left">
+                                        {["Calendário e linha do tempo", "Documentos e memórias", "Várias crianças na mesma conta", "Compartilhe com a família"].map(f => (
+                                            <li key={f} className="flex items-center gap-2 text-sm" style={{ color: 'var(--foreground)' }}>
+                                                <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white" style={{ background: '#a855f7' }}><Check className="w-3.5 h-3.5" strokeWidth={2.5} /></span>
+                                                {f}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <a href="/meus-filhos" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95" style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #a855f7 45%, #ec4899 75%, #f97316 100%)' }}>
+                                        Conhecer o Meus Filhos
+                                        <ArrowRight className="w-4 h-4" />
+                                    </a>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </Section>
 
                 <Section id="aplicativos" className="py-12 md:py-20">
                     <div className="max-w-6xl mx-auto px-5 lg:px-8">
