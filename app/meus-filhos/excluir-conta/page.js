@@ -36,7 +36,7 @@ export default function ExcluirContaMeusFilhos() {
             </LegalSection>
 
             <LegalSection title="3. Prazo">
-                <p>Os dados são apagados em até 30 dias depois da confirmação do pedido. Cópias de segurança são eliminadas no ciclo normal de rotação dos backups.</p>
+                <p>Os dados são apagados em até 7 dias úteis depois da confirmação do pedido.</p>
             </LegalSection>
 
             <LegalSection title="4. O que pode ser mantido">

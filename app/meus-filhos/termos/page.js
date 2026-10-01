@@ -66,7 +66,7 @@ export default function TermosMeusFilhos() {
                     "Pedidos de reembolso seguem as regras da loja onde a compra foi feita (Apple ou Google).",
                     "Excluir o app ou a sua conta não cancela a assinatura. Cancele também pela loja.",
                 ]} />
-                <p>Quando a assinatura termina, os limites do plano Grátis voltam a valer para a sua conta.</p>
+                <p>A assinatura só é encerrada se você cancelar. Enquanto você não cancelar, ela continua sendo renovada a cada período.</p>
             </LegalSection>
 
             <LegalSection title="9. Anúncios">
